@@ -8,6 +8,11 @@
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 	</head>
 	<body>
+	<?php if ($this->session->flashdata('msg')) { ?>
+		<script>
+			alert('<?= $this->session->flashdata('msg') ?> ')
+		</script>
+	<?php } ?>
 		<div class="container">
 			<h3>Login</h3>
 			<hr>

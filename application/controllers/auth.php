@@ -3,10 +3,10 @@ class Auth extends CI_Controller{
     function __construct(){
         parent::__construct();
         $this->load->model('login_model');
-        if ($this->session->has_userdata('level'))
-		{ 
-            redirect($this->session->userdata('level'),'refresh');
-        }
+        // if ($this->session->has_userdata('level'))
+		// { 
+        //     redirect($this->session->userdata('level'),'refresh');
+        // }
     }
  
     function index(){
@@ -42,7 +42,7 @@ class Auth extends CI_Controller{
                 }
             else 
                 {
-                    $text = '<div class="alert alert-danger" role="alert">Kombinasi Username dan Password Salah!</div>';
+                    $text = 'Username dan Password Salah';
                     echo $this->session->set_flashdata('msg',$text);
                     redirect('auth');
                 }
@@ -60,7 +60,7 @@ class Auth extends CI_Controller{
         }
 
         else {
-            $text = '<div class="alert alert-danger" role="alert">Kombinasi Username dan Password Salah!</div>';
+            $text = 'Username dan Password Salah';
             echo $this->session->set_flashdata('msg',$text);
             redirect('auth');
         }
