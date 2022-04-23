@@ -1,31 +1,28 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Sign In</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Produk By Mfikri.com">
-    <meta name="author" content="M Fikri Setiadi">
-  </head>
-  <body>
- 
-    <div class="container">
-        <div class="col-md-4 col-md-offset-4">
-          <form class="form-signin" action="<?php echo base_url().'login/auth'?>" method="post">
-            <h2 class="form-signin-heading">Please sign in</h2>
-            <?php echo $this->session->flashdata('msg');?>
-            <label for="username" class="sr-only">Username</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" value="remember-me"> Remember me
-              </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-          </form>
-        </div>
-        </div> <!-- /container -->
- 
-  </body>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Login dengan CodeIgniter 3 &raquo; Jaranguda.com</title>
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="container">
+			<h3>Login</h3>
+			<hr>
+			<form action="<?php echo base_url('auth/login')?>" method="POST" >
+				<div class="form-group">
+					<label for="cari">Username</label>
+					<input type="text" class="form-control" id="username" name="username">
+				</div>
+				<div class="form-group">
+					<label for="cari">Password</label>
+					<input type="password" class="form-control" id="password" name="password">
+				</div>
+				<input class="btn btn-primary" type="submit" value="Login"> 
+				<input class="btn btn-primary" type="reset" value="Reset">
+			</form>
+		</div>
+	</body>
 </html>
