@@ -4,7 +4,7 @@ class test extends CI_Controller{
 
 	function __construct(){
 		parent::__construct();
-		$this->load->model('admin');
+		$this->load->model('admin_model');
 	}
 
 	// function index(){
@@ -37,8 +37,9 @@ class test extends CI_Controller{
 	// }
 
     function index(){
-        $result = $this->admin->get_data('SELECT * FROM proposal');
-        // print_r($result);
-		$this->load->view('test', $result);
+        $data['data'] = $this->admin_model->get_data('SELECT * FROM proposal');
+		// $data = array(1,2,'hjelloe');
+		print_r($data);
+		$this->load->view('test', $data);
     }
 }

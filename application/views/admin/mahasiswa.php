@@ -1,11 +1,3 @@
-<div class="container-fluid">
-
-  
-  <div class="alert alert-success" role="alert">
-    <h4 class="alert-heading">Saat ini anda sedang menjalankan <?php echo $_SESSION['keg'];?> </h4>
-    <p> silahkan untuk mengajukan bimbingan ke ...</p>
-  <hr>
-</div>
 <div class="row">
     <div class="col-sm-12 col-md-10">
         <h5 class="mb-0"><i class="fa fa-cubes"></i> Data Bimbingan</h5>
@@ -28,6 +20,19 @@
                 <th scope="col">Status</th>
                 <th scope="col">Keterangan</th>
             </tr>
+            <?php $no = 1; foreach($data as $row): ?>
+                <tr>
+                    <td><?= $no ?></td>
+                    <td><?= $row['id_proposal'] ?></td>
+                    <td><?= $row['npm1'] ?></td>
+                    <td><?= $row['npm2'] ?></td>
+                    <td><?= $row['keg'] ?></td>
+                    <td><?= $row['judul'] ?></td>
+                    <td><?= $row['status'] ?></td>
+                    <td><?= $row['file'] ?></td>
+                    <?php $no++; ?>
+                </tr>
+            <?php endforeach ?>
         </thead>
         <tbody>
         </tbody>

@@ -50,7 +50,7 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Pilihan anda :</h6>
-            <a class="collapse-item" href="<?php echo base_url('Dashboard/proyek1') ?>">PROYEK 1</a>
+            <a class="collapse-item" href="<?php echo base_url('admin/getAllproposal') ?>">PROYEK 1</a>
             <a class="collapse-item" href="<?php echo base_url('Dashboard/proyek2') ?>">PROYEK 2</a>
             <a class="collapse-item" href="<?php echo base_url('Dashboard/proyek3') ?>">PROYEK 3</a>
             <a class="collapse-item" href="<?php echo base_url('Dashboard/Intership') ?>"> INTERSHIP</a>

@@ -1,45 +1,42 @@
 <?php 
 
-class admin extends CI_Controller{
+class Admin extends CI_Controller{
 
 	function __construct(){
 		parent::__construct();
+		$this->load->model('admin_model');
 		if ($this->session->userdata('level') !== 'admin')
 		{ redirect('auth/logout','refresh');}
-		$this->load->model('admin');
 	}
 
 	function index(){
 		$this->load->view('admin/v_header');
         $this->load->view('admin/v_sidebar');
-        $this->load->view('admin/v_daftar_files');
+        $this->load->view('admin/home');
         $this->load->view('admin/v_footer');
 	}
 
-	function getAllproposal(){
-		$result = $this->admin->execute_query('SELECT * FROM proposal');
-        foreach($result->result() as $val){
-            foreach($val as $key => $value){
-                $user_data=array(
-
-				);
-            };
-		}
+	function indexmahasiswa(){
+        $data['data'] = $this->admin_model->get_data('SELECT * FROM mahasiswa');
+		$this->load->view('admin/v_header');
+        $this->load->view('admin/v_sidebar');
+		$this->load->view('admin/proyek1', $data);
+        $this->load->view('admin/v_footer');
 	}
 
-	function getAlllaporan(){
-		$result = $this->admin->execute_query('SELECT * FROM laporan');
-		foreach($result->result() as $data){
-			$udata = array(
-				'id' => $data->id_proposal,
-				'npm1' => $data->npm1,
-				'npm2' => $data->npm2,
-				'keg' => $data->keg,
-				'judul' => $data->judul,
-				'status' => $data->status,
-			);
-		}
-		$this->load->view('test', $udata);
-		
+	function indexkegiatan(){
+		$data['data'] = $this->admin->get_data('SELECT * FROM kegiatan');
+		$this->load->view('admin/v_header');
+        $this->load->view('admin/v_sidebar');
+		$this->load->view('admin/proyek1', $data);
+        $this->load->view('admin/v_footer');
+	}
+
+	function indexdosen(){
+		$data['data'] = $this->admin->get_data('SELECT * FROM dosen WHERE level != "admin"');
+		$this->load->view('admin/v_header');
+        $this->load->view('admin/v_sidebar');
+		$this->load->view('admin/proyek1', $data);
+        $this->load->view('admin/v_footer');
 	}
 }

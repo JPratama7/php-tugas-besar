@@ -50,13 +50,13 @@
     <a href="/Admin/tambah" class="btn btn-primary">TAMBAH DATA</a>
 </body>
     <?php
-    print_r($result);
-    foreach ($result as $row) :;
+    print_r($data);
+    foreach ($data as $row) :;
     ?>
         <tr>
             <td>npm1</td>
             <td>:</td>
-            <td><?= $row['npm1']; ?></td>
+            <td><?= $row['npm1'] ?></td>
         </tr>
     <?php
     endforeach;
