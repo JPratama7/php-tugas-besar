@@ -1,3 +1,9 @@
+<?php if ($this->session->flashdata('msg')) { ?>
+		<script>
+			alert('<?= $this->session->flashdata('msg') ?> ')
+		</script>
+<?php } ?>
+
 <div class="container-fluid">
  
   <div class="alert alert-success" role="alert">

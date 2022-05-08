@@ -13,22 +13,20 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Kode Bimbingan</th>
-                <th scope="col">Judul</th>
-                <th scope="col">NPM</th>
-                <th scope="col">Pembimbing</th>
-                <th scope="col">Tanggal Bimbingan</th>
-                <th scope="col">Status</th>
-                <th scope="col">Keterangan</th>
+                <th scope="col">Nilai Ketua</th>
+                <th scope="col">Nilai Anggota</th>
+                <th scope="col">Pesan</th>
+                <th scope="col">kegiatan</th>
+                <th scope="col">File</th>
             </tr>
-            <?php $no = 1; foreach($data as $row): ?>
+            <?php $no = 1; foreach($bim as $row): ?>
                 <tr>
                     <td><?= $no ?></td>
-                    <td><?= $row['id_proposal'] ?></td>
-                    <td><?= $row['npm1'] ?></td>
-                    <td><?= $row['npm2'] ?></td>
-                    <td><?= $row['keg'] ?></td>
-                    <td><?= $row['judul'] ?></td>
-                    <td><?= $row['status'] ?></td>
+                    <td><?= $row['id_bimbingan'] ?></td>
+                    <td><?= $row['nilai_ket'] ?></td>
+                    <td><?= $row['nilai_part'] ?></td>
+                    <td><?= $row['pesan'] ?></td>
+                    <td><?= $row['kegiatan'] ?></td>
                     <td><?= $row['file'] ?></td>
                     <?php $no++; ?>
                 </tr>

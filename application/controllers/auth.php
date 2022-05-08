@@ -50,9 +50,11 @@ class Auth extends CI_Controller{
 
         elseif($mhs->num_rows() == 1){ //table Customer
             foreach($mhs->result() as $data){
+                $npm = $data->username;
                 $user_data = array(
                     'username' => $data->username,
-                    'level' => 'Mahasiswa'
+                    'level' => 'Mahasiswa',
+                    'id_tim' => $this->login_model->execute_query('SELECT id_tim FROM tim WHERE npm1 = "{$npm}" or npm2 = "{$npm}"')
                 );
                 $this->session->set_userdata($user_data);
             }

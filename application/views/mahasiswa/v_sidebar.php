@@ -34,7 +34,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Pilihan anda :</h6>
-            <a class="collapse-item" href="<?php echo base_url('Dashboard/proposal') ?>">PROPOSAL</a>
+            <a class="collapse-item" href="<?php echo base_url('mahasiswa/inputproposal') ?>">PROPOSAL</a>
             <a class="collapse-item" href="<?php echo base_url('Dashboard/draftlaporan') ?>"> DRAFT LAPORAN </a>
             <a class="collapse-item" href="<?php echo base_url('Dashboard/dokumenakhir') ?>">DOKUMEN AKHIR</a>
             
@@ -43,20 +43,10 @@
       </li>
   
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+        <a class="nav-link" href="<?php echo base_url('mahasiswa/indexbimbingan') ?>">
           <i class="fas fa-fw fa-folder"></i>
           <span> BIMBINGAN </span>
         </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Pilihan anda :</h6>
-            <a class="collapse-item" href="<?php echo base_url('Dashboard/proyek1') ?>">PROYEK 1</a>
-            <a class="collapse-item" href="<?php echo base_url('Dashboard/proyek2') ?>">PROYEK 2</a>
-            <a class="collapse-item" href="<?php echo base_url('Dashboard/proyek3') ?>">PROYEK 3</a>
-            <a class="collapse-item" href="<?php echo base_url('Dashboard/Intership') ?>"> INTERSHIP</a>
-             <a class="collapse-item" href="<?php echo base_url('Dashboard/tugasakhir') ?>"> TUGAS AKHIR</a>
-          </div>
-        </div>
       </li>
  
  
