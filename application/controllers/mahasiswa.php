@@ -36,7 +36,7 @@ class Mahasiswa extends CI_Controller{
 			'judul' => $this->input->post('judul_proyek'),
 			'status' => 'N',
 			'abstrak' => $this->input->post('abstraksi'),
-			'file' => $this->input->post('npm1'),
+			'file_proposal' => $this->input->post('npm1'),
 		);
 		$this->db->insert('tim', $data);
 		redirect('mahasiswa/index');
@@ -44,12 +44,12 @@ class Mahasiswa extends CI_Controller{
 
 	function indexbimbingan(){
 		$npm = $this->session->userdata('username');
-		$id_tim = $this->admin_model->get_data('SELECT id_tim FROM tim WHERE status = "Y" AND npm1 = "{$npm}" or npm2 = "{$npm}" ');
-		$data = array(
-			'tim' => $this->admin_model->get_data('SELECT * FROM tim WHERE status = "Y" AND npm1 = "{$npm}" or npm2 = "{$npm}"'),
-			'bim' => $this->admin_model->get_data('SELECT * FROM bimbingan WHERE id_tim = "{$id_tim}"'),
-		);
+		$id_tim = $this->admin_model->get_data("SELECT id_tim FROM tim WHERE status = 'Y' AND npm1 = '{$npm}' or npm2 = '{$npm}' ")[0]['id_tim'];
 		if(!empty($id_tim)){
+			$data = array(
+				'tim' => $this->admin_model->get_data("SELECT id_tim FROM tim WHERE status = 'Y' AND npm1 = '{$npm}' or npm2 = '{$npm}' ")[0]['id_tim'],
+				'bim' => $this->admin_model->get_data("SELECT * FROM bimbingan WHERE id_tim = '{$id_tim}'"),
+			);
 			$this->load->view('mahasiswa/v_header');
 			$this->load->view('mahasiswa/v_sidebar');
 			$this->load->view('mahasiswa/bimbingan', $data);
@@ -61,6 +61,17 @@ class Mahasiswa extends CI_Controller{
 	}
 
 	function insertbim(){
-
+		print_r($_SESSION['id_tim']);
+        $data = array(            
+		'kegiatan' => $this->input->post('kegiatan'),
+		'id_tim' => $this->session->userdata('id_tim'),
+		'file' => $this->input->post('file_laporan')
+	);
+        if($this->db->insert('bimbingan', $data) === true){
+			redirect('mahasiswa/indexbimbingan');
+		}else{
+			$this->session->set_flashdata('msg','Error terjadi');
+			redirect('mahasiswa/indexbimbingan');
+		}
 	}
 }

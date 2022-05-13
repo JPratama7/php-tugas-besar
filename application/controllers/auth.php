@@ -54,7 +54,7 @@ class Auth extends CI_Controller{
                 $user_data = array(
                     'username' => $data->username,
                     'level' => 'Mahasiswa',
-                    'id_tim' => $this->login_model->execute_query('SELECT id_tim FROM tim WHERE npm1 = "{$npm}" or npm2 = "{$npm}"')
+                    'id_tim' => $this->login_model->execute_query("SELECT id_tim FROM tim WHERE status = 'Y' AND npm1 = '{$npm}' or npm2 = '{$npm}' ")[0]['id_tim']
                 );
                 $this->session->set_userdata($user_data);
             }
