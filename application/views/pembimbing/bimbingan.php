@@ -28,10 +28,9 @@
                     <td><?= $row['nilai_part'] ?></td>
                     <td><?= $row['pesan'] ?></td>
                     <td><?= $row['kegiatan'] ?></td>
-                    <td><?= $row['file'] ?></td>
                     <td class="d-flex" width="140px">
                         <button class="mx-1 btn btn-primary" data-toggle="modal" data-target="#tanggapi<?= $row['id_bimbingan'] ?>">Tanggapi</button>
-                        <button class=" mx-1 btn btn-primary" data-toggle="modal" data-target="#edit">Edit</button>
+                        <a href="<?= $row['id_bimbingan'] ?>"><button class=" mx-1 btn btn-primary" data-toggle="modal" data-target="#download<?= $row['id_bimbingan'] ?>">download</button></a>
                     </td>
                     <?php $no++; ?>
                 </tr>

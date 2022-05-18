@@ -45,7 +45,7 @@
             </div>
             <div class="form-group">
                 <label class="font-weight-bold">Proposal Proyek</label>
-                <input type="text" class="form-control" name="proposal" id="proposal" aria-describedby="proposal" min="0" required>
+                <input type="file" class="form-control" name="proposal" id="proposal" aria-describedby="proposal" min="20" required>
             </div>
         </div>
         <div>
