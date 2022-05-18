@@ -7,7 +7,6 @@ class Pem extends CI_Controller{
 		if ($this->session->userdata('level') !== 'pem')
 		{ redirect('auth/logout','refresh');}
 		$this->load->model('query');
-		$this->load->library('url');
 	}
 
 	function index(){

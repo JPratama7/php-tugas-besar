@@ -71,10 +71,9 @@ class Mahasiswa extends CI_Controller{
 			$this->load->view('mahasiswa/v_sidebar');
 			$this->load->view('mahasiswa/bimbingan', $data);
 			$this->load->view('mahasiswa/v_footer');
-		} else{
-			$this->session->set_flashdata('msg','Data tidak ditemukan');
-			redirect('mahasiswa/index');
 		}
+		$this->session->set_flashdata('msg','Data tidak ditemukan');
+		redirect('mahasiswa/index');
 	}
 
 	function insertbim(){
