@@ -8,7 +8,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
- 
+  <?php if ($this->session->flashdata('msg')) { ?>
+		<script>
+			alert('<?= $this->session->flashdata('msg') ?> ')
+		</script>
+	<?php } ?>
   <title>TUKIRKU|| POLITEKNIK POS INDONESIA</title>
   <link rel="icon"  href="<?php echo base_url() ?>assets/img/logoSC.png">
   <!-- Custom fonts for this template-->

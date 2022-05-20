@@ -7,7 +7,6 @@ class Pem extends CI_Controller{
 		if ($this->session->userdata('level') !== 'pem')
 		{ redirect('auth/logout','refresh');}
 		$this->load->model('query');
-		$this->load->library('url');
 	}
 
 	function index(){
@@ -21,7 +20,7 @@ class Pem extends CI_Controller{
 		$uname = $this->session->userdata('username');
 		$id_tim = $this->query->get_data("SELECT id_tim FROM tim WHERE status = 'Y' AND pembim = '{$uname}'")[0]['id_tim'];
 		$data = array(
-			'bim' => $this->query->get_data("SELECT bimbingan.id_bimbingan, bimbingan.nilai_ket, bimbingan.nilai_part, bimbingan.pesan, bimbingan.kegiatan FROM bimbingan INNER JOIN tim ON bimbingan.id_tim = tim.id_tim WHERE bimbingan.id_tim = {$id_tim}")
+			'bim' => $this->query->get_data("SELECT tim.npm1, tim.keg, bimbingan.id_bimbingan, bimbingan.nilai_ket, bimbingan.nilai_part, bimbingan.pesan, bimbingan.kegiatan FROM bimbingan INNER JOIN tim ON bimbingan.id_tim = tim.id_tim WHERE bimbingan.id_tim = {$id_tim}")
 		);
 		$this->load->view('pembimbing/v_header');
         $this->load->view('pembimbing/v_sidebar');
@@ -29,25 +28,18 @@ class Pem extends CI_Controller{
         $this->load->view('pembimbing/v_footer');
 	}
 
-	function downloadFile(){
-		$id = $this->input->get('id');
+	function downloadBimbingan(){
+		$id = substr($_SERVER['REQUEST_URI'],strrpos($_SERVER['REQUEST_URI'],"/")+1); 
 		$this->load->helper('download');
 		if(!is_null($id)){
-			$this->db->select('id_bimbingan','file');
-			$this->db->where('id_bimbingan',$id);
-			$file_data = $this->db->get('bimbingan', 1);
-			$filename = $file_data['id_bimbingan'];
-			$file_raw = $file_data['file'];
-			header("Content-type: application/pdf");
-			header("Content-disposition: download; filename=$filename");
-			header("Content-length: ".strlen($file_raw));
-			echo $file_raw; 
+			$file_data = $this->query->get_data("SELECT file_bim FROM bimtim WHERE id_bimbingan = {$id}")[0];
+			$file_raw = $file_data['file_proposal'];
+			force_download($id.".pdf", $file_raw);
 		}else{
 			echo "Error GBLK ".$this->upload->display_errors();
 		}
-		
-
 	}
+	
 	function updatebim(){
 		
         $data = [

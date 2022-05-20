@@ -9,6 +9,13 @@ class Mahasiswa extends CI_Controller{
 		$this->load->model('query');
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+		// UPLOAD Libraray
+		$config['upload_path']          = 'upload/';
+		$config['allowed_types']        = 'pdf';
+		$config['max_size']             = 2048;
+
+		$this->load->library('upload');
+		$this->upload->initialize($config);
 	}
 
 	function index(){
@@ -29,14 +36,6 @@ class Mahasiswa extends CI_Controller{
 	}
 
 	function insertproposal(){
-
-		$config['upload_path']          = 'upload/';
-		$config['allowed_types']        = 'gif|jpg|png|jpeg|bat';
-		$config['max_size']             = 2048;
-
-		$this->load->library('upload');
-		$this->upload->initialize($config);
-
 		if ( !$this->upload->do_upload('proposal'))
 		{
 				echo "Error GBLK ".$this->upload->display_errors();
@@ -78,17 +77,45 @@ class Mahasiswa extends CI_Controller{
 	}
 
 	function insertbim(){
-		print_r($_SESSION['id_tim']);
-        $data = array(            
-		'kegiatan' => $this->input->post('kegiatan'),
-		'id_tim' => $this->session->userdata('id_tim'),
-		'file' => $this->input->post('file_laporan')
-	);
-        if($this->db->insert('bimbingan', $data) === true){
-			redirect('mahasiswa/indexbimbingan');
-		}else{
-			$this->session->set_flashdata('msg','Error terjadi');
+		print_r($this->input->post());
+		print_r($this->upload->data());
+		print_r($_FILES);
+		if (!$_FILES)
+		{
+			$this->session->set_flashdata('msg','File tidak ditemukan');
+			redirect(base_url('mahasiswa/index'));
+		} else{
+			$file_raw = file_get_contents($_FILES['tmp_name']);
+			$data = array(   
+				'id_tim' => rand(1000, 99999),
+				'kegiatan' => $this->input->post('kegiatan'),
+				'id_tim' => $this->session->userdata('id_tim'),
+				'file_bim' => $file_raw
+			);
+			$this->db->insert('bimbingan', $data);
 			redirect('mahasiswa/indexbimbingan');
 		}
+	}
+
+	function inputDraf(){
+		$this->load->view('mahasiswa/v_header');
+		$this->load->view('mahasiswa/v_sidebar');
+		$this->load->view('mahasiswa/draft');
+		$this->load->view('mahasiswa/v_footer');
+	}
+
+	function insertDraf(){
+
+	}
+
+	function inputDokAk(){
+		$this->load->view('mahasiswa/v_header');
+		$this->load->view('mahasiswa/v_sidebar');
+		$this->load->view('mahasiswa/dokumenakhir');
+		$this->load->view('mahasiswa/v_footer');
+	}
+
+	function insertDokAk(){
+
 	}
 }

@@ -13,10 +13,12 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Kode Tim</th>
+                <th scope="col">Jenis Kegiatan</th>
+                <th scope="col">NPM Ketua</th>
                 <th scope="col">Nilai Ketua</th>
                 <th scope="col">Nilai Anggota</th>
                 <th scope="col">Pesan</th>
-                <th scope="col">kegiatan</th>
+                <th scope="col">Kegiatan</th>
                 <th scope="col">File</th>
                 <th scope="col">Aksi</th>
             </tr>
@@ -24,6 +26,8 @@
                 <tr>
                     <td><?= $no ?></td>
                     <td><?= $row['id_bimbingan'] ?></td>
+                    <td><?= $row['keg'] ?></td>
+                    <td><?= $row['npm1'] ?></td>
                     <td><?= $row['nilai_ket'] ?></td>
                     <td><?= $row['nilai_part'] ?></td>
                     <td><?= $row['pesan'] ?></td>
