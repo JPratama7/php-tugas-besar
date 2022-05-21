@@ -22,15 +22,25 @@ class Pem extends CI_Controller
 
 	function indexbimbingan()
 	{
-		$uname = $this->session->userdata('username');
-		$id_tim = $this->query->get_data("SELECT id_tim FROM tim WHERE status = 'Y' AND pembim = '{$uname}'")[0]['id_tim'];
-		$data = array(
-			'bim' => $this->query->get_data("SELECT tim.npm1, tim.keg, bimbingan.id_bimbingan, bimbingan.nilai_ket, bimbingan.nilai_part, bimbingan.pesan, bimbingan.kegiatan FROM bimbingan INNER JOIN tim ON bimbingan.id_tim = tim.id_tim WHERE bimbingan.id_tim = {$id_tim}")
-		);
-		$this->load->view('pembimbing/v_header');
-		$this->load->view('pembimbing/v_sidebar');
-		$this->load->view('pembimbing/bimbingan', $data);
-		$this->load->view('pembimbing/v_footer');
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('nilai_ket', 'Nilai Ketua', 'require');
+		$this->form_validation->set_rules('nilai_part', 'Nilai Partner', 'require');
+		$this->form_validation->set_rules('approve', 'Approve', 'require');
+		$this->form_validation->set_rules('pesan', 'Pesan', 'require');
+
+		if ($this->form_validation->run() != false) {
+		} else {
+			$uname = $this->session->userdata('username');
+			$id_tim = $this->query->get_data("SELECT id_tim FROM tim WHERE status = 'Y' AND pembim = '{$uname}'")[0]['id_tim'];
+			$data = array(
+				'bim' => $this->query->get_data("SELECT tim.npm1, tim.keg, bimbingan.id_bimbingan, bimbingan.nilai_ket, bimbingan.nilai_part, bimbingan.pesan, bimbingan.kegiatan FROM bimbingan INNER JOIN tim ON bimbingan.id_tim = tim.id_tim WHERE bimbingan.id_tim = {$id_tim}")
+			);
+			$this->load->view('pembimbing/v_header');
+			$this->load->view('pembimbing/v_sidebar');
+			$this->load->view('pembimbing/bimbingan', $data);
+			$this->load->view('pembimbing/v_footer');
+		}
 	}
 
 	function downloadBimbingan()
@@ -48,11 +58,10 @@ class Pem extends CI_Controller
 
 	function updatebim()
 	{
-
 		$data = [
 			'nilai_ket' => $this->input->post('nilai_ket'),
 			'nilai_part' => $this->input->post('nilai_part'),
-			'approv' => 'Y',
+			'approv' => $this->input->post('approve'),
 			'pesan' => $this->input->post('pesan')
 		];
 		$this->db->set($data);

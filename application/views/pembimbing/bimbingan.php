@@ -63,6 +63,14 @@
                                         <label for="">Masukan Pesan</label>
                                         <textarea class=" form-control" name="pesan" id="pesan" rows="3" required></textarea>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="">Approve Bimbingan</label>
+                                        <select name="approve" id="approve">
+                                            <option value="" selected>---</option>
+                                            <option value="Y">Ya</option>
+                                            <option value="N">Tidak</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
