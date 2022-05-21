@@ -2,7 +2,7 @@
     <div class="col-sm-12 col-md-10">
         <h5 class="mb-0"><i class="fa fa-cubes"></i> Data Bimbingan</h5>
     </div>
-     <div class="col-sm-12 col-md-2">
+    <div class="col-sm-12 col-md-2">
         <a href="<?= site_url('tambah_barang'); ?>" class="btn btn-success btn-sm btn-block">Tambah Bimbingan</a>
     </div>
 </div>
@@ -19,10 +19,10 @@
                 <th scope="col">Nilai Anggota</th>
                 <th scope="col">Pesan</th>
                 <th scope="col">Kegiatan</th>
-                <th scope="col">File</th>
                 <th scope="col">Aksi</th>
             </tr>
-            <?php $no = 1; foreach($bim as $row): ?>
+            <?php $no = 1;
+            foreach ($bim as $row) : ?>
                 <tr>
                     <td><?= $no ?></td>
                     <td><?= $row['id_bimbingan'] ?></td>
@@ -33,8 +33,8 @@
                     <td><?= $row['pesan'] ?></td>
                     <td><?= $row['kegiatan'] ?></td>
                     <td class="d-flex" width="140px">
+                        <form action="<?= base_url("pem/downloadBimbingan/{$row['id_bimbingan']}"); ?>" method="post" enctype="multipart/form-data"><button type="submit" class="mx-1 btn btn-primary">Download</button></form>
                         <button class="mx-1 btn btn-primary" data-toggle="modal" data-target="#tanggapi<?= $row['id_bimbingan'] ?>">Tanggapi</button>
-                        <a href="<?= $row['id_bimbingan'] ?>"><button class=" mx-1 btn btn-primary" data-toggle="modal" data-target="#download<?= $row['id_bimbingan'] ?>">download</button></a>
                     </td>
                     <?php $no++; ?>
                 </tr>
@@ -80,6 +80,6 @@
 </div>
 
 
-  
+
 
 </div>

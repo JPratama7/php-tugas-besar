@@ -5,9 +5,9 @@
 </div>
 <hr class="mt-0" />
 <!-- Button trigger modal -->
-<a href="<?= base_url('mahasiswa/formbim') ?>"><button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#bimbing1">
+<button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#bimbing1">
     Buat Bimbingan
-</button></a>
+</button>
 <div class="modal fade" id="bimbing1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -22,7 +22,7 @@
                     <label for="" class="font-weight-bold">Kegiatan Pembimbingan :</label>
                     <textarea class=" form-control" name="kegiatan" id="kegiatan" rows="3" required></textarea>
                     <label for="" class=" mt-3 font-weight-bold">File Laporan :</label>
-                    <input type="file" class="form-control" name="file_bim" id="file_bim" aria-describedby="file_bim" min="20" required>
+                    <input type="file" class="form-control" name="file_bim" min="20" required>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -44,8 +44,10 @@
                 <th scope="col">Pesan</th>
                 <th scope="col">kegiatan</th>
                 <th scope="col">File</th>
+                <th scope="col">Status Bimbingan</th>
             </tr>
-            <?php $no = 1; foreach($bim as $row): ?>
+            <?php $no = 1;
+            foreach ($bim as $row) : ?>
                 <tr>
                     <td><?= $no ?></td>
                     <td><?= $row['id_bimbingan'] ?></td>
@@ -53,7 +55,10 @@
                     <td><?= $row['nilai_part'] ?></td>
                     <td><?= $row['pesan'] ?></td>
                     <td><?= $row['kegiatan'] ?></td>
-                    <td><?= $row['file'] ?></td>
+                    <td>
+                        <form action="<?= base_url("mahasiswa/downloadBimbingan/{$row['id_bimbingan']}"); ?>" method="post" enctype="multipart/form-data"><button type="submit" class="btn btn-primary">Download</button></form>
+                    </td>
+                    <td><?= $row['approv'] == 'y' ? 'Approved' : 'Not Approved' ?></td>
                     <?php $no++; ?>
                 </tr>
             <?php endforeach ?>
@@ -64,6 +69,6 @@
 </div>
 
 
-  
+
 
 </div>
