@@ -22,25 +22,23 @@ class Pem extends CI_Controller
 
 	function indexbimbingan()
 	{
-		$this->load->helper('form');
-		$this->load->library('form_validation');
-		$this->form_validation->set_rules('nilai_ket', 'Nilai Ketua', 'require');
-		$this->form_validation->set_rules('nilai_part', 'Nilai Partner', 'require');
-		$this->form_validation->set_rules('approve', 'Approve', 'require');
-		$this->form_validation->set_rules('pesan', 'Pesan', 'require');
-
-		if ($this->form_validation->run() != false) {
-		} else {
-			$uname = $this->session->userdata('username');
-			$id_tim = $this->query->get_data("SELECT id_tim FROM tim WHERE status = 'Y' AND pembim = '{$uname}'")[0]['id_tim'];
-			$data = array(
-				'bim' => $this->query->get_data("SELECT tim.npm1, tim.keg, bimbingan.id_bimbingan, bimbingan.nilai_ket, bimbingan.nilai_part, bimbingan.pesan, bimbingan.kegiatan FROM bimbingan INNER JOIN tim ON bimbingan.id_tim = tim.id_tim WHERE bimbingan.id_tim = {$id_tim}")
-			);
-			$this->load->view('pembimbing/v_header');
-			$this->load->view('pembimbing/v_sidebar');
-			$this->load->view('pembimbing/bimbingan', $data);
-			$this->load->view('pembimbing/v_footer');
-		}
+		$uname = $this->session->userdata('username');
+		$data_tim = $this->query->get_data("SELECT id_tim FROM tim WHERE status = 'Y' AND pembim = '{$uname}'");
+		$list_tim = array();
+		foreach ($data_tim as $dt) {
+			array_push($list_tim, $dt['id_tim']);
+		};
+		$this->db->join('tim', 'bimbingan.id_tim = tim.id_tim');
+		$this->db->where_in('bimbingan.id_tim', $list_tim);
+		$this->db->select('tim.npm1, tim.keg, bimbingan.id_bimbingan, bimbingan.nilai_ket, bimbingan.nilai_part, bimbingan.pesan, bimbingan.kegiatan');
+		$data_bimbingan = $this->db->get('bimbingan')->result_array();
+		$data = array(
+			'bim' => $data_bimbingan
+		);
+		$this->load->view('pembimbing/v_header');
+		$this->load->view('pembimbing/v_sidebar');
+		$this->load->view('pembimbing/bimbingan', $data);
+		$this->load->view('pembimbing/v_footer');
 	}
 
 	function downloadBimbingan()

@@ -5,43 +5,43 @@
     <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#sidang">
         Pengajuan Draft Laporan
     </button>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="sidang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="<?= base_url('koor/proyek/ajukan_sidang') ?>" method="post">
-                <div class="modal-body">
+    <!-- Modal -->
+    <div class="modal fade" id="sidang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="<?= base_url('koor/proyek/ajukan_sidang') ?>" method="post">
+                    <div class="modal-body">
 
-                    <div class="form-group">
-                        <input autocomplete="off" type="hidden" class="form-control" id="mulai" value="<?= $nim ?>" name="nim">
+                        <div class="form-group">
+                            <input autocomplete="off" type="hidden" class="form-control" id="mulai" value="<?= $this->session->userdata('username') ?>" name="nim">
 
-                        <label for="">Mulai Pengumpulan draft Laporan</label>
-                        <input autocomplete="off" type="date" class="form-control" id="mulai" value="" name="mulai">
+                            <label for="">Mulai Pengumpulan draft Laporan</label>
+                            <input autocomplete="off" type="date" class="form-control" id="mulai" value="" name="mulai">
 
+                        </div>
+
+                        <duv class="form-group">
+                            <label for="">Akhir Pengumpulan Draft Laporan </label>
+                            <input autocomplete="off" type="date" class="form-control" id="akhir" value="" name="akhir">
+
+                        </duv>
                     </div>
-
-                    <duv class="form-group">
-                        <label for="">Akhir Pengumpulan Draft Laporan </label>
-                        <input autocomplete="off" type="date" class="form-control" id="akhir" value="" name="akhir">
-
-                    </duv>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Ajukan</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Ajukan</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+    <!-- Modal -->
 </div>
-<!-- Modal -->
 <hr class="mt-0" />
 <div class="table-responsive">
     <table class="table table-sm table-hover table-striped" id="tables">
@@ -50,7 +50,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Jadwal Sidang</th>
                 <th scope="col">Judul Proyek</th>
-                <th scope="col">>Kategori Proyek</th>
+                <th scope="col">Kategori Proyek</th>
                 <th scope="col">Dosen Pembimbing</th>
                 <th scope="col">Dosen Penguji</th>
                 <th scope="col">Aksi</th>
@@ -59,8 +59,9 @@
             foreach ($data as $row) : ?>
                 <tr>
                     <td><?= $no ?></td>
-                    <?php if (isset($row['jadwal'])) {
-                        echo '<td class="align-middle text-center">' . date('d/m/Y', strtotime($a['jadwal'])) . '</td>';
+                    <?php
+                    if (!empty($row['tanggal'])) {
+                        echo '<td class="align-middle text-center">' . date('d/m/Y', strtotime($row['tanggal'])) . '</td>';
                     } else {
                         echo '<td class="align-middle text-center">Kosong</td>';
                     } ?>
@@ -97,17 +98,17 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="<?= base_url('koor/proyek/ajukan_dospeng') ?>" method="post">
+                                <form action="<?= base_url('koor/insertpenguji') ?>" method="post">
                                     <div class="modal-body">
 
                                         <div class="form-group">
                                             <input autocomplete="off" type="hidden" class="form-control" id="id_tim" value="<?= $row['id_tim'] ?>" name="id_tim">
 
                                             <label for="">Pilih Dosen Penguji</label>
-                                            <select class="  form-control" id="dospeng" name="dospeng" required>
+                                            <select class="form-control" id="dospeng" name="penguji" required>
                                                 <option class="" value="111">--pilih--</option>
-                                                <?php foreach ($user as $us => $uss) : ?>
-                                                    <option class="" value=" <?= $uss['nim'] ?>"> <?= $uss['nama'] ?></option>
+                                                <?php foreach ($penguji as $data) : ?>
+                                                    <option class="" value=" <?= $data['username'] ?>"> <?= $data['nama'] ?></option>
 
                                                 <?php
 
@@ -135,7 +136,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="<?= base_url('koor/proyek/jadwal_sidang') ?>" method="post">
+                                <form action="<?= base_url('koor/insertjadwalsidang') ?>" method="post">
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <input autocomplete="off" type="hidden" class="form-control" id="id" value="<?= $row['id_tim'] ?>" name="id">
