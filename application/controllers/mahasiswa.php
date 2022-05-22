@@ -82,11 +82,6 @@ class Mahasiswa extends CI_Controller
 		}
 	}
 
-	function formbim()
-	{
-		$this->load->view('mahasiswa/upbim');
-	}
-
 	function insertbim()
 	{
 		if (!$this->upload->do_upload('file_bim')) {
@@ -128,6 +123,13 @@ class Mahasiswa extends CI_Controller
 
 	function insertDokAk()
 	{
+	}
+
+
+	function test()
+	{
+		print_r($this->input->post());
+		print_r($this->upload->data());
 	}
 
 	// function downloadFile()
