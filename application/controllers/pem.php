@@ -68,9 +68,18 @@ class Pem extends CI_Controller
 		redirect(base_url('pem/indexbimbingan'));
 	}
 
-	function jadwalsidang()
+	function indexjadwal()
 	{
-		$data['data'] = $this->query->get_data('SELECT * FROM proposal');
+		$this->db->join('mahasiswa as mhs1', 'tim.npm1 = mhs1.username', 'inner');
+		$this->db->join('mahasiswa as mhs2', 'tim.npm2 = mhs2.username', 'inner');
+		$this->db->join('sidang', 'sidang.id_tim = tim.id_tim', 'inner');
+		$this->db->where('pembim', $this->session->userdata('username'));
+		$this->db->or_where('penguji', $this->session->userdata('username'));
+		$this->db->select('tim.id_tim ,tim.keg, tim.judul, tim.status, tim.abstrak, tim.status, mhs1.nama as mhs1, mhs2.nama as mhs2, tim.file_draf, sidang.revisi_app, sidang.sidang_app, sidang.nilai_ket, sidang.nilai_part, sidang.revisi');
+		$team = $this->db->get('tim')->result_array();
+		$data = array(
+			'sidang' => $team
+		);
 		$this->load->view('pembimbing/v_header');
 		$this->load->view('pembimbing/v_sidebar');
 		$this->load->view('pembimbing/jadwal', $data);

@@ -111,6 +111,20 @@ class Mahasiswa extends CI_Controller
 
 	function insertDraf()
 	{
+		if (!$this->upload->do_upload('file_draf')) {
+			$this->session->set_flashdata('msg', 'File tidak ditemukan');
+			redirect(base_url('mahasiswa/index'));
+		} else {
+			$file_raw = file_get_contents($this->upload->data('full_path'));
+			$this->db->update(
+				'tim',
+				array(
+					'file_draf' => $file_raw
+				),
+				array('id_tim' => $this->session->userdata('id_tim'))
+			);
+			redirect('mahasiswa/index');
+		}
 	}
 
 	function inputDokAk()
@@ -123,28 +137,22 @@ class Mahasiswa extends CI_Controller
 
 	function insertDokAk()
 	{
+		if (!$this->upload->do_upload('file_akhir')) {
+			$this->session->set_flashdata('msg', 'File tidak ditemukan');
+			redirect(base_url('mahasiswa/index'));
+		} else {
+			$file_raw = file_get_contents($this->upload->data('full_path'));
+			$this->db->update(
+				'tim',
+				array(
+					'file_final' => $file_raw
+				),
+				array('id_tim' => $this->session->userdata('id_tim'))
+			);
+			redirect('mahasiswa/index');
+		}
 	}
 
-
-	function test()
-	{
-		print_r($this->input->post());
-		print_r($this->upload->data());
-	}
-
-	// function downloadFile()
-	// {
-	// 	$tipe = $this->input->post('tipe');
-	// 	$id = substr($_SERVER['REQUEST_URI'], strrpos($_SERVER['REQUEST_URI'], "/") + 1);
-	// 	$this->load->helper('download');
-	// 	if (!is_null($id)) {
-	// 		$file_data = $this->query->get_data("SELECT file_bim FROM $tipe WHERE id_bimbingan = {$id}")[0];
-	// 		$file_raw = $file_data['file_bim'];
-	// 		force_download($id . ".pdf", $file_raw);
-	// 	} else {
-	// 		echo "Error GBLK " . $this->upload->display_errors();
-	// 	}
-	// }
 	function downloadBimbingan()
 	{
 		$id = substr($_SERVER['REQUEST_URI'], strrpos($_SERVER['REQUEST_URI'], "/") + 1);

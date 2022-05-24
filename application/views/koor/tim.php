@@ -1,9 +1,6 @@
 <div class="row">
     <div class="col-sm-12 col-md-10">
-        <h5 class="mb-0"><i class="fa fa-cubes"></i> Data Bimbingan</h5>
-    </div>
-    <div class="col-sm-12 col-md-2">
-        <a href="<?= site_url('tambah_barang'); ?>" class="btn btn-success btn-sm btn-block">Tambah Pembimbing</a>
+        <h5 class="mb-0"><i class="fa fa-cubes"></i> Data Tim</h5>
     </div>
 </div>
 <hr class="mt-0" />
@@ -40,14 +37,14 @@
                     } elseif ($row['keg'] == 'inter') {
                         echo '<td>Intership</td>';
                     } ?>
-                    <td><?= $row['status'] == 'y' ? 'Approved' : 'Not Approved' ?></td>
+                    <td><?= $row['status'] == 'Y' ? 'Approved' : 'Not Approved' ?></td>
                     <td><?= $row['abstrak'] ?></td>
                     <td>
                         <div style=" display: flex; flex-wrap: wrap">
                             <form action="<?= base_url("koor/downloadDraf/{$row['id_tim']}"); ?>" method="post" enctype="multipart/form-data"><button type="submit" class="mx-1 btn btn-primary">Draf</button></form>
                             <form action="<?= base_url("koor/downloadPropos/{$row['id_tim']}"); ?>" method="post" enctype="multipart/form-data"><button type="submit" class="mx-1 btn btn-primary">Proposal</button></form>
                             <form action="<?= base_url("koor/downloadAkhir/{$row['id_tim']}"); ?>" method="post" enctype="multipart/form-data"><button type="submit" class="mx-1 btn btn-primary">Final</button></form>
-                            <!-- <button class="mx-1 btn btn-primary" data-toggle="modal" data-target="#tanggapi<?= $row['id_bimbingan'] ?>">Tanggapi</button>  -->
+                            <button class="mx-1 btn btn-primary" data-toggle="modal" data-target="#tanggapi<?= $row['id_tim'] ?>">Tanggapi</button>
                         </div>
                     </td>
                     <?php $no++; ?>
@@ -57,32 +54,89 @@
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Tanggapan Dospem</h5>
+                                <h5 class="modal-title" id="exampleModalLongTitle">Data Tim</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="<?= base_url('pem/updatebim'); ?>" method="post" enctype="multipart/form-data">
+                            <form action="<?= base_url('koor/updatetim'); ?>" method="post" enctype="multipart/form-data">
                                 <div class="modal-body">
                                     <div class="form-group">
+                                        <input type="text" hidden name="id_tim" value="<?= $row['id_tim'] ?>">
+                                        <label for="">Ketua</label>
+                                        <select name="ketua" id="">
+                                            <?php
+                                            foreach ($mhs as $m) :
+                                                if ($m['nama'] == $row['mhs1']) {
+                                                    echo "<option value=" . $m['username'] . " selected >" . ucwords($m['nama']) . "</option>";
+                                                } else {
+                                                    echo "<option value=" . $m['username'] . ">" . ucwords($m['nama']) . "</option>";
+                                                }
+                                            ?>
+                                            <?php
+                                            endforeach
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Anggota</label>
+                                        <select name="anggota" id="">
+                                            <?php
+                                            foreach ($mhs as $m) :
+                                                if ($m['nama'] == $row['mhs2']) {
+                                                    echo "<option value=" . $m['username'] . " selected >" . ucwords($m['nama']) . "</option>";
+                                                } else {
+                                                    echo "<option value=" . $m['username'] . ">" . ucwords($m['nama']) . "</option>";
+                                                }
+                                            ?>
+                                            <?php
+                                            endforeach
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Kegiatan</label>
+                                        <select name="keg" id="keg">
+                                            <option value="p1" <?= $row['keg'] == 'p1' ? 'selected' : '' ?>>Proyek 1</option>
+                                            <option value="p2" <?= $row['keg'] == 'p2' ? 'selected' : '' ?>>Proyek 2</option>
+                                            <option value="p3" <?= $row['keg'] == 'p3' ? 'selected' : '' ?>>Proyek 3</option>
+                                            <option value="inter" <?= $row['keg'] == 'inter' ? 'selected' : '' ?>>Intership</option>
+                                            <option value="ta" <?= $row['keg'] == 'ta' ? 'selected' : '' ?>>Tugas Akhir</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="">Pembimbing</label>
-                                        <input autocomplete="off" type="numb" class="form-control" id="nilai_ket" value="<?= $row['nilai_ket'] ?>" name="nilai_ket">
-                                        <input autocomplete="off" type="hidden" class="form-control" id="id_bimbingan" value="<?= $row['id_bimbingan'] ?>" name="id_bimbingan">
+                                        <select name="pembim" id="" value="<?= $row['pem'] ?>">
+                                            <?php
+                                            foreach ($dosen as $pembim) :
+                                                if ($pembim['nama'] == $row['pem']) {
+                                                    echo "<option value=" . $pembim['username'] . " selected >" . $pembim['nama'] . "</option>";
+                                                } else {
+                                                    echo "<option value=" . $pembim['username'] . ">" . $pembim['nama'] . "</option>";
+                                                }
+                                            ?>
+                                            <?php
+                                            endforeach
+                                            ?>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Penguji</label>
-                                        <input autocomplete="off" type="numb" class="form-control" id="nilai_part" value="<?= $row['nilai_part'] ?>" name="nilai_part">
+                                        <select name="penguji" id="" value="<?= $row['peng'] ?>">
+                                            <?php
+                                            foreach ($dosen as $penguji) :
+                                            ?>
+                                                <option value="<?= $penguji['username'] ?>"><?= $penguji['nama'] ?></option>
+                                            <?php
+                                            endforeach
+                                            ?>
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Masukan Pesan</label>
-                                        <textarea class=" form-control" name="pesan" id="pesan" rows="3" required></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Approve Bimbingan</label>
+                                        <label for="">Approve Tim</label>
                                         <select name="approve" id="approve">
-                                            <option value="" selected>---</option>
-                                            <option value="Y">Ya</option>
-                                            <option value="N">Tidak</option>
+                                            <option value="Y" <?= $row['status'] == 'Y' ? 'selected' : '' ?>>Ya</option>
+                                            <option value="N" <?= $row['status'] == 'N' ? 'selected' : '' ?>>Tidak</option>
                                         </select>
                                     </div>
                                 </div>

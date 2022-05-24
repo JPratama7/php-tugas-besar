@@ -30,12 +30,33 @@ class Koor extends CI_Controller
 		$this->db->select('tim.id_tim ,tim.keg, tim.judul, tim.status, tim.abstrak, tim.status, pem.nama as pem, peng.nama as peng, mhs1.nama as mhs1, mhs2.nama as mhs2');
 		$team = $this->db->get('tim')->result_array();
 		$data = array(
-			'tim' => $team
+			'tim' => $team,
+			'dosen' => $this->query->get_data("SELECT nama, username FROM dosen"),
+			'mhs' => $this->query->get_data("SELECT nama, username FROM mahasiswa")
 		);
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
 		$this->load->view('koor/v_header');
 		$this->load->view('koor/v_sidebar');
 		$this->load->view('koor/tim', $data);
 		$this->load->view('koor/v_footer');
+	}
+
+	function updatetim()
+	{
+		$data = array(
+			'npm1' => $this->input->post('ketua'),
+			'npm2' => $this->input->post('anggota'),
+			'keg' => $this->input->post('keg'),
+			'pembim' => $this->input->post('pembim'),
+			'penguji' => $this->input->post('penguji'),
+			'status' => $this->input->post('approve')
+		);
+		$this->db->update('tim', $data, array(
+			'id_tim' => $this->input->post('id_tim')
+		));
+		redirect('koor/indextim');
 	}
 
 	function indexsidang()
